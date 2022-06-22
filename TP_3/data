@@ -1,0 +1,48 @@
+1001,Ale,Ale,6.000000,14D4F4F,ExecutiveClass,En Horario
+0,name,lastname,0.000000,flycode,typePassenger,statusFlight
+1,Lou,González,10000.000000,BA2491A,FirstClass,Aterrizado
+2,Ulrike,Muñoz,25000.000000,IB0800A,FirstClass,Aterrizado
+3,Brade,Rojas,20000.000000,MM0987B,FirstClass,En Horario
+4,Kimbell,Díaz,50000.000000,BA2491A,FirstClass,Aterrizado
+5,Sheelagh,Pérez,18000.000000,IB0800A,FirstClass,Aterrizado
+6,Gayle,Soto,30000.000000,MM0987B,FirstClass,En Horario
+7,Kimberlee,Contreras,33000.000000,BA2491A,FirstClass,Aterrizado
+8,Henrieta,Silva,30000.000000,IB0800A,FirstClass,Aterrizado
+9,Jeanine,Martínez,18000.000000,MM0987B,FirstClass,En Horario
+10,Aggie,Sepúlveda,15000.000000,BA2491A,FirstClass,Aterrizado
+11,Brandea,Morales,15000.000000,IB0800A,FirstClass,Aterrizado
+12,Cordelie,Rodríguez,50000.000000,IB0800A,FirstClass,Aterrizado
+13,Shel,López,50000.000000,MM0987B,FirstClass,En Horario
+14,Bronnie,Fuentes,20000.000000,MM0987B,FirstClass,En Horario
+15,Megen,Hernández,10000.000000,BA2491A,FirstClass,Aterrizado
+16,Iver,Torres,12000.000000,BA2491A,FirstClass,Aterrizado
+17,Ernesta,Araya,37000.000000,BA2491A,FirstClass,Aterrizado
+18,Cirillo,Flores,50000.000000,MM0987B,FirstClass,En Horario
+19,Park,Espinoza,30000.000000,MM0987B,FirstClass,En Horario
+20,Bellanca,Valenzuela,15000.000000,BA2491A,FirstClass,Aterrizado
+21,Bobbye,Castillo,15000.000000,BA2491A,FirstClass,Aterrizado
+22,Eugene,Tapia,50000.000000,BA2491A,FirstClass,Aterrizado
+
+648,Ethan,Vásquez,12000.000000,HY4567D,EconomyClass,Demorado
+
+682,Tally,Aguilera,42000.000000,HY4567D,EconomyClass,Demorado
+683,Jaquenette,Parra,25000.000000,HY4567D,EconomyClass,Demorado
+684,Sly,Romero,42000.000000,HY4567D,EconomyClass,Demorado
+685,Yul,Aravena,30000.000000,HY4567D,EconomyClass,Demorado
+686,Rosalyn,Vargas,37000.000000,HY4567D,EconomyClass,Demorado
+687,Devondra,Vázquez,10000.000000,HY4567D,EconomyClass,Demorado
+688,Xenos,Cáceres,37000.000000,HY4567D,EconomyClass,Demorado
+689,Terrence,Yáñez,42000.000000,HY4567D,EconomyClass,Demorado
+690,Krystyna,Leiva,50000.000000,HY4567D,EconomyClass,Demorado
+691,Krishna,Escobar,50000.000000,HY4567D,EconomyClass,Demorado
+692,Zorina,Ruiz,18000.000000,HY4567D,EconomyClass,Demorado
+693,Baxy,Valdés,20000.000000,HY4567D,EconomyClass,Demorado
+694,Terrie,Vidal,42000.000000,HY4567D,EconomyClass,Demorado
+695,Justino,Salinas,18000.000000,HY4567D,EconomyClass,Demorado
+696,Erhard,Zúñiga,33000.000000,HY4567D,EconomyClass,Demorado
+697,Robbie,Peña,30000.000000,HY4567D,EconomyClass,Demorado
+698,Paddie,Godoy,33000.000000,HY4567D,EconomyClass,Demorado
+699,Evelyn,Lagos,10000.000000,HY4567D,EconomyClass,Demorado
+700,Abbot,Maldonado,33000.000000,HY4567D,EconomyClass,Demorado
+
+819,Roch,Salinas,33000.000000,FR5678G,EconomyClass,En Horario
