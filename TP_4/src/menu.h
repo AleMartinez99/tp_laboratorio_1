@@ -6,4 +6,6 @@
 #endif /* MENU_H_ */
 
 int menu();
+int menuInformes();
+int subMenuInforme1();
 int menuModificacion();

@@ -10,6 +10,7 @@ typedef struct
 	char codigoVuelo[10];
 	char tipoPasajero[50];
 	char estadoVuelo[50];
+	int millas;
 
 }ePassenger;
 
@@ -20,6 +21,9 @@ void Passenger_delete();
 
 int Passenger_setId(ePassenger* this,int id);
 int Passenger_getId(ePassenger* this,int* id);
+
+int Passenger_setMilla(ePassenger* this,int milla);
+int Passenger_getMilla(ePassenger* this,int* milla);
 
 int Passenger_setNombre(ePassenger* this,char* nombre);
 int Passenger_getNombre(ePassenger* this,char* nombre);

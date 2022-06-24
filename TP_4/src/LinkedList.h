@@ -3,22 +3,21 @@
 
 struct Node
 {
-
-	void* pElement;
-    struct Node* pNextNode;
+	void* pElement;				///PUNTERO AL ELEMENTO(PERSONNA,EMPLEADO,ETC)
+    struct Node* pNextNode;		///PUNTERO AL PROX NODO
 
 }typedef Node;
 
 struct LinkedList{
 
-    Node* pFirstNode;
-    int size;
+    Node* pFirstNode;	///PUNTERO AL ELEMENTO DEL PRIMER NODO
+    int size;			///TAMAÑO CADA VEZ QUE AGREGO O BORRO HAGO SIZE++/--
 
 }typedef LinkedList;
 #endif
 
 //Publicas
-LinkedList* ll_newLinkedLisdt(void);
+LinkedList* ll_newLinkedList(void);
 int ll_len(LinkedList* this);
 Node* test_getNode(LinkedList* this, int nodeIndex);
 int test_addNode(LinkedList* this, int nodeIndex,void* pElement);
@@ -37,3 +36,12 @@ int ll_containsAll(LinkedList* this,LinkedList* this2);
 LinkedList* ll_subList(LinkedList* this,int from,int to);
 LinkedList* ll_clone(LinkedList* this);
 int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order);
+
+//////////////////////////////////////////////////////////////////////////////
+///
+int ll_Informe(LinkedList* this, int (*pFunc)(void*));
+
+///////////////////////////////////////////////////////////////////////////////////
+int ll_count(LinkedList* this, int (*fn)(void* element));
+LinkedList* ll_filter(LinkedList* this, int (*pFunc)(void* element, char* codigo), char codigoVuelo[]);
+LinkedList* ll_map(LinkedList* this, void (*pFunc)(void*));

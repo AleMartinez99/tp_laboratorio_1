@@ -23,6 +23,7 @@ ePassenger* Passenger_new() { // Retorna un puntero a passenger
         strcpy(nuevoPasajero->nombre,"");
         strcpy(nuevoPasajero->apellido,"");
         nuevoPasajero->precio = 0;
+        nuevoPasajero->millas = 0;
         strcpy(nuevoPasajero->codigoVuelo,"");
         strcpy(nuevoPasajero->tipoPasajero,"");
         strcpy(nuevoPasajero->estadoVuelo,"");
@@ -43,6 +44,7 @@ ePassenger* Passenger_newParametros(char* idStr,char* nombreStr,char* apellidoSt
 		Passenger_setTipoPasajero(pPassenger,tipoPasajeroStr);
 		Passenger_setEstadoVuelo(pPassenger,estadoVueloStr);
 	}
+
 	return pPassenger;
 }
 
@@ -71,6 +73,25 @@ int Passenger_getId(ePassenger* this,int* id) {
 	int todoOk = 0;
 	if(this != NULL && id != NULL) {
 		*id = this->id;
+		todoOk = 1;
+	}
+	return todoOk;
+}
+
+int Passenger_setMilla(ePassenger* this,int milla) {
+
+	int todoOk = 0;
+	if(this != NULL && milla > 0) {
+		this->id = milla;
+		todoOk = 1;
+	}
+	return todoOk;
+}
+int Passenger_getMilla(ePassenger* this,int* milla) {
+
+	int todoOk = 0;
+	if(this != NULL && milla != NULL) {
+		*milla = this->millas;
 		todoOk = 1;
 	}
 	return todoOk;

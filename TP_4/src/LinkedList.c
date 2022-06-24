@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "LinkedList.h"
+#include "Controller.h"
 
 LinkedList* ll_newLinkedList(void){
 	LinkedList* this = (LinkedList*) malloc(sizeof(LinkedList));
@@ -26,10 +27,10 @@ Node* test_getNode(LinkedList* this, int nodeIndex){
 
 	if(this != NULL && nodeIndex >= 0 && nodeIndex < ll_len(this)){
 
-		pNode = this->pFirstNode;
+		pNode = this->pFirstNode; /// ACA pNode tiene el puntero del NODO 0
 
 		for(int i = 0;i<nodeIndex;i++){
-			pNode = pNode->pNextNode;
+			pNode = pNode->pNextNode; /// ACA en pNode ya tnego guardado el nodo, y lo voy pasando de a uno a travez de las direcciones de memoria.
 		}
 	}
 	return pNode;
@@ -284,4 +285,92 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order){
 		retorno = 0;
 	}
 		return retorno;
+}
+
+int ll_Informe(LinkedList* this, int (*pFunc)(void*)){
+	int retorno = -1;
+	int len;
+	void* auxElement = NULL;
+
+	if(this != NULL &&  pFunc != NULL) {
+		len = ll_len(this);
+		for(int i = 0;i<len;i++) {
+			auxElement = ll_get(this,i);
+			if(pFunc(auxElement)) {
+				controller_showPassenger(auxElement);
+			}
+		}
+
+		retorno = 0;
+	}
+		return retorno;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int ll_count(LinkedList* this, int (*pFunc)(void*)) {
+	int contador = -1;
+	int len;
+	void* auxElement = NULL;
+
+		if(this != NULL &&  pFunc != NULL) {
+			contador = 0;
+			len = ll_len(this);
+			for(int i = 0;i<len;i++) {
+				auxElement = ll_get(this,i);
+				if(pFunc(auxElement)) {
+					contador++;
+				}
+			}
+
+		}
+	return contador;
+}
+
+////////////////////////////////////////////////////////////////////////////
+
+LinkedList* ll_filter(LinkedList* this, int (*pFunc)(void* element, char* codigo), char codigoVuelo[]) {
+
+	LinkedList* subList = NULL;
+	void* auxElement = NULL;
+	int len;
+	int indiceAux = 0;
+
+	if(this != NULL && pFunc != NULL && codigoVuelo != NULL) {
+			subList = ll_newLinkedList();
+			len = ll_len(this);
+
+			if(subList != NULL) {
+				for(int i = 0;i<len;i++) {
+					auxElement = ll_get(this,i);
+					if(controller_SegundoInforme(auxElement,codigoVuelo)) {
+						 ll_push(subList, indiceAux, auxElement);
+						 indiceAux++;
+					}
+				}
+			}
+		}
+	return subList;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+
+LinkedList* ll_map(LinkedList* this, void (*pFunc)(void*)) {
+
+	void* auxElement = NULL;
+	int len;
+
+	if(this != NULL && pFunc != NULL ) {
+
+		len = ll_len(this);
+
+		for(int i = 0;i<len;i++) {
+			auxElement = ll_get(this,i);
+			if(auxElement != NULL) {
+				auxElement = controller_MapTercerInforme(auxElement);
+			}
+		}
+	}
+	return this;
 }

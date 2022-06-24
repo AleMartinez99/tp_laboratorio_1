@@ -76,6 +76,14 @@ int main() {
 				controller_saveAsBinary("data.bin",listaPasajeros);
 				break;
 			case 10:
+				if(ll_len(listaPasajeros) > 0) {
+				controller_InformePassenger(listaPasajeros);
+            	} else {
+            		printf("Primero ingrese un empleado\n");
+            		system("pause");
+            	}
+				break;
+			case 11:
 				seguir = 0;
 				printf("SALIO CON EXITO\n");
 				break;

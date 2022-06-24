@@ -23,3 +23,12 @@ int controller_CompararApellido(void* a, void* b);
 int controller_CompararPrecios(void* a, void* b);
 int controller_CompararCodigoVuelo(void* a, void* b);
 int controller_IdSiguiente(LinkedList* pArrayListPassenger);
+int controller_InformeEconomyClass(void* a);
+int controller_InformePassenger(LinkedList* pArrayListPassenger);
+int informesPrecioPromedios(LinkedList* pArrayListPassenger);
+int controller_InformeFirstClass(void* a);
+int controller_InformeExecutiveClass(void* a);
+
+
+int controller_SegundoInforme(void* a, char* codigo);
+ePassenger*  controller_MapTercerInforme(void* a);

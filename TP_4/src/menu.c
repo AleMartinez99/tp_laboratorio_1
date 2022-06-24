@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "menu.h"
+#include "miBiblioteca.h"
 
 int menu() {
 	  int opcion;
@@ -15,14 +16,40 @@ int menu() {
 	printf("7- Ordenar pasajeros\n");
 	printf("8- Guardar datos de lospasajeros en archivo texto\n");
 	printf("9- Guardar datos de lospasajeros en archivo binario\n");
+	printf("10- INFORMES\n");
 	// Agrego opcion SALIR
-	printf("10- SALIR\n");
+	printf("12- SALIR\n");
 	printf("Ingrese opcion: ");
 	fflush(stdin);
 	scanf("%d", &opcion);
 
 	return opcion;
 }
+
+int menuInformes() {
+	int opcion;
+
+	printf(" **** MENU INFORMES ****\n");
+	printf("1- CANT POR CLASE\n");
+	printf("2- generar archivo vuelo\n");
+	printf("3- calcular millas acumuladas\n");
+	printf("4- MIINFORME clase economica\n");
+	printf("5- MIINFORME PRECIOS\n");
+	printf("Ingrese opcion: ");
+	fflush(stdin);
+	scanf("%d", &opcion);
+
+	return opcion;
+}
+
+int subMenuInforme1() {
+	int opcion;
+
+	utnGetNumero(&opcion,"\n1- Economica\n2- Primera\n3- Ejecutiva\n","Error... \n1- Economica\n2- Primera\n3- Ejecutiva:",1,3);
+
+	return opcion;
+}
+
 int menuModificacion() {
 	  int opcion;
 

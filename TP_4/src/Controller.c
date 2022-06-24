@@ -101,7 +101,7 @@ int controller_addPassenger(LinkedList* pArrayListPassenger,int* id) {
 		}
 		miPasarAMayusculas(codigoVuelo);
 
-		utnGetNumero(&bufferInt,"Ingrese tipo de pasajero:\n1-FirstClass\n2-ExecutiveClass\n3-EconomyClass\n","Error... Ingrese numero del 1 al 3: ",1,3);
+		utnGetNumero(&bufferInt,"Ingrese tipo de pasajero:\n1-FirstClass\n2-ExecutiveClass\n3-EconomyClass\nIngrese su tipo: ","Error... Ingrese numero del 1 al 3\nIngrese su tipo: ",1,3);
 		switch(bufferInt) {
 			case 1:
 				strcpy(tipoPasajero,"FirstClass");
@@ -114,7 +114,7 @@ int controller_addPassenger(LinkedList* pArrayListPassenger,int* id) {
 				break;
 		}
 
-		utnGetNumero(&bufferInt,"Ingrese tipo de pasajero\n1-Aterrizado\n2-En Horario\n3-Demorado\n4-En Vuelo\n","Error... Ingrese numero del 1 al 4: ",1,4);
+		utnGetNumero(&bufferInt,"Estado de pasajero\n1-Aterrizado\n2-En Horario\n3-Demorado\n4-En Vuelo\nIngrese su estado: ","Error... Ingrese numero del 1 al 4\nIngrese su Estado: ",1,4);
 		switch(bufferInt) {
 			case 1:
 				strcpy(estadoPasajero,"Aterrizado");
@@ -336,7 +336,7 @@ int controller_ListPassenger(LinkedList* pArrayListPassenger){
 		if(len > 0) {
 			printf("              ***LISTA PASAJEROS  ***\n");
 			printf("------------------------------------------------------------------------------------\n");
-			printf(" ID  NOMBRE        APELLIDO        PRECIO   CODIGOVUELO    TIPOPASAJERO     ESTADOVUELO  \n");
+			printf(" ID  NOMBRE        APELLIDO        PRECIO   CODIGOVUELO    TIPOPASAJERO     ESTADOVUELO  MILLAS \n");
 			printf("-------------------------------------------------------------------------------------\n");
 			for(int i = 0; i < len; i++) {
 				pAuxPassenger = ll_get(pArrayListPassenger,i);
@@ -402,7 +402,77 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger)
 	}
 	return todoOk;
 }
+int controller_InformePassenger(LinkedList* pArrayListPassenger)
+{
+	int todoOk = 0;
+	int contadorInforme1;
+	char cogidoInforme2[100];
+	LinkedList* nuevaListaInforme2 = NULL;
+	if (pArrayListPassenger != NULL)
+	{
+		todoOk = 1;
+		printf("Informe empleados\n");
 
+		switch (menuInformes())	{
+			case 1:
+				printf("INFORME - CANTIDAD DE PASS POR CLASE\n");
+				switch(subMenuInforme1()) {
+					case 1:
+						contadorInforme1 = ll_count(pArrayListPassenger,controller_InformeEconomyClass);
+						if(contadorInforme1 >= 0) {
+							printf("De la clase economica hay %d pasajeros\n",contadorInforme1);
+						} else {
+							printf("ERROR\n");
+							system("pause");
+						}
+						break;
+					case 2:
+						contadorInforme1 = ll_count(pArrayListPassenger,controller_InformeFirstClass);
+						if(contadorInforme1 >= 0) {
+							printf("De la primer clase hay %d pasajeros\n",contadorInforme1);
+						} else {
+							printf("ERROR\n");
+							system("pause");
+						}
+						 break;
+					case 3:
+						contadorInforme1 = ll_count(pArrayListPassenger,controller_InformeExecutiveClass);
+						if(contadorInforme1 >= 0) {
+							printf("De la clase ejecutva hay %d pasajeros\n",contadorInforme1);
+						} else {
+							printf("ERROR\n");
+							system("pause");
+						}
+						break;
+				}
+				break;
+			case 2:
+				printf("NUEVA LISTA - ARCHIVO\n");
+				printf("Ingrese codigo de vuelo:\n");
+				fflush(stdin);
+				scanf("%s",cogidoInforme2);
+				nuevaListaInforme2 = ll_filter(pArrayListPassenger, controller_SegundoInforme, cogidoInforme2);
+				// controller_saveAsText("data",listaPasajeros);
+				controller_saveAsText("codVueloArchivo",nuevaListaInforme2);
+				break;
+			case 3:
+				printf("AGREGAR MILLAS\n");
+				break;
+			case 4:
+				printf("INFORME - CLASE ECONOMICA\n");
+				ll_Informe(pArrayListPassenger,controller_InformeEconomyClass);
+				break;
+			case 5:
+				printf("INFORME - Precio total y promedios\n");
+				informesPrecioPromedios(pArrayListPassenger);
+				break;
+			default:
+				printf("ERROR...\n");
+
+		}
+	}
+	return todoOk;
+}
 /** \brief Guarda los datos de los pasajeros en el archivo data.csv (modo texto).
  *
  * \param path char*
@@ -499,6 +569,7 @@ int controller_showPassenger(ePassenger* pPassenger) {
 	char codigoVuelo[8];
 	char tipoPasajero[50];
 	char estadoVuelo[50];
+	int millas;
 
     int todoOk = 0;
 
@@ -511,8 +582,8 @@ int controller_showPassenger(ePassenger* pPassenger) {
 		Passenger_getTipoPasajero(pPassenger,tipoPasajero) &&
 		Passenger_getEstadoVuelo(pPassenger,estadoVuelo))
     {
-
-        printf("%3d %-15s%-15s%5.2f    %-15s   %-15s   %-15s\n",id,nombre,apellido,precio,codigoVuelo,tipoPasajero,estadoVuelo);
+    	Passenger_getMilla(pPassenger,&millas);
+        printf("%3d %-15s%-15s%5.2f    %-15s   %-15s   %-15s %d\n",id,nombre,apellido,precio,codigoVuelo,tipoPasajero,estadoVuelo,millas);
         todoOk = 1;
     }
     return todoOk;
@@ -553,22 +624,6 @@ ePassenger* controller_searchPassengerID(LinkedList* pArrayListPassenger,int id,
 	return auxPassenger;
 }
 
-int controller_CompararId(void* a, void* b ) {
-
-	int todoOk;
-
-	if(a != NULL && b != NULL) {
-		if(((ePassenger*)a)->id > ((ePassenger*)b)->id)	{
-			todoOk = 1;
-		} else {
-			if(((ePassenger*)a)->id < ((ePassenger*)b)->id) {
-				todoOk = 0;
-			}
-		}
-	}
-	return todoOk;
-}
-
 int controller_CompararNombre(void* a, void* b) {
 
 	int todoOk = 0;
@@ -597,6 +652,21 @@ int controller_CompararApellido(void* a, void* b) {
 	return todoOk;
 }
 
+int controller_CompararId(void* a, void* b ) {
+
+	int todoOk;
+	if(a != NULL && b != NULL) {
+		if(((ePassenger*)a)->id > ((ePassenger*)b)->id)	{
+			todoOk = 1;
+		} else {
+			if(((ePassenger*)a)->id < ((ePassenger*)b)->id) {
+				todoOk = -1;
+			}
+		}
+	}
+	return todoOk;
+}
+
 int controller_CompararPrecios(void* a, void* b) {
 
 	int todoOk = 0;
@@ -612,6 +682,7 @@ int controller_CompararPrecios(void* a, void* b) {
 	return todoOk;
 }
 
+
 int controller_CompararCodigoVuelo(void* a, void* b) {
 
 	int todoOk = 0;
@@ -624,4 +695,106 @@ int controller_CompararCodigoVuelo(void* a, void* b) {
 		todoOk = strcmp(auxCodigoA,auxCodigoB);
 	}
 	return todoOk;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// INFORMES.
+
+int informesPrecioPromedios(LinkedList* pArrayListPassenger) {
+
+	int ok=0;
+	ePassenger* auxPassenger = NULL;
+	float acumulador = 0;
+	int contador = 0;
+
+	int len = ll_len(pArrayListPassenger);
+
+	if(pArrayListPassenger != NULL) {
+		for(int i = 0 ; i < len ; i++ )	{
+			auxPassenger  =  (ePassenger*) ll_get(pArrayListPassenger,i);
+			if(auxPassenger  != NULL ) {
+				acumulador += auxPassenger->precio;
+				contador ++;
+			}
+		}
+
+		if(contador > 0) {
+			printf("La suma de los precios es: %.2f\n", acumulador);
+			printf("El promedio es: %.2f\n", (acumulador / (float)contador));
+		} else {
+			printf("No hay ningun precio para promediar\n");
+		}
+	}
+
+	return ok;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+int controller_InformeEconomyClass(void* a) {
+	int todoOk = 0;
+
+	if(a != NULL) {
+		if(!strcmp(((ePassenger*)a)->tipoPasajero,"EconomyClass")) {
+			todoOk = 1;
+		}
+	}
+	return todoOk;
+}
+
+int controller_InformeExecutiveClass(void* a) {
+	int todoOk = 0;
+
+	if(a != NULL) {
+		if(!strcmp(((ePassenger*)a)->tipoPasajero,"ExecutiveClass")) {
+			todoOk = 1;
+		}
+	}
+	return todoOk;
+}
+
+int controller_InformeFirstClass(void* a) {
+	int todoOk = 0;
+
+	if(a != NULL) {
+		if(!strcmp(((ePassenger*)a)->tipoPasajero,"FirstClass")) {
+			todoOk = 1;
+		}
+	}
+	return todoOk;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+
+int controller_SegundoInforme(void* a, char* codigo) {
+	int todoOk = 0;
+
+	if(a != NULL) {
+		if(!strcmp(((ePassenger*)a)->codigoVuelo,codigo)) {
+			todoOk = 1;
+		}
+	}
+	return todoOk;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+ePassenger*  controller_MapTercerInforme(void* a) {
+
+	int millas;
+	float aux;
+
+	if(1) {
+
+		aux = ((ePassenger*)a)->precio / (float)100;
+		millas = (int)aux;
+		if(controller_InformeFirstClass((ePassenger*)a)) {
+				millas = millas * 2;
+		} else if (controller_InformeExecutiveClass((ePassenger*)a)) {
+			millas = millas * 3;
+		}
+		((ePassenger*)a)->millas = millas;
+		printf("Las millas de %s son: %d\n",((ePassenger*)a)->nombre,((ePassenger*)a)->millas);
+	}
+	return ((ePassenger*)a);
 }
