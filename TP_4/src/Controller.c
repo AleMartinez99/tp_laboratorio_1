@@ -766,11 +766,11 @@ int controller_InformeFirstClass(void* a) {
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int controller_SegundoInforme(void* a, char* codigo) {
+int controller_SegundoInforme(void* a) {
 	int todoOk = 0;
 
 	if(a != NULL) {
-		if(!strcmp(((ePassenger*)a)->codigoVuelo,codigo)) {
+		if(!strcmp(((ePassenger*)a)->codigoVuelo,"Primera clase")) {
 			todoOk = 1;
 		}
 	}
