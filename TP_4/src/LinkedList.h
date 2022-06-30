@@ -42,6 +42,7 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order);
 int ll_Informe(LinkedList* this, int (*pFunc)(void*));
 
 ///////////////////////////////////////////////////////////////////////////////////
+
 int ll_count(LinkedList* this, int (*fn)(void* element));
-LinkedList* ll_filter(LinkedList* this, int (*pFunc)(void* element, char* codigo), char codigoVuelo[]);
+LinkedList* ll_filter(LinkedList* this, int (*pFunc)(void* element));
 LinkedList* ll_map(LinkedList* this, void (*pFunc)(void*));

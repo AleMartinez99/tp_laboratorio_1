@@ -15,7 +15,7 @@ typedef struct
 }ePassenger;
 
 ePassenger* Passenger_new();
-ePassenger* Passenger_newParametros(char* idStr,char* nombreStr,char* apellidoStr,char* precioStr,char* codigoVueloStr,char* tipoPasajeroStr,char* estadoVueloStr);
+ePassenger* Passenger_newParametros(char* idStr,char* nombreStr,char* apellidoStr,char* precioStr,char* codigoVueloStr,char* tipoPasajeroStr,char* estadoVueloStr,char* millas);
 
 void Passenger_delete();
 
@@ -42,5 +42,19 @@ int Passenger_getTipoPasajero(ePassenger* this,char* tipoPasajero);
 
 int Passenger_setEstadoVuelo(ePassenger* this,char* estadoVuelo);
 int Passenger_getEstadoVuelo(ePassenger* this,char* estadoVuelo);
+
+///////////////////////////////////////////////
+
+int Passenger_InformeEconomyClass(void* a);
+int Passenger_InformeFirstClass(void* a);
+int Passenger_InformeExecutiveClass(void* a);
+
+///////////////////////////////////////////////
+
+int Passenger_SegundoInforme(void* a) ;
+
+///////////////////////////////////////////////////
+
+void Passenger_MapTercerInforme(void* a);
 
 #endif /* PASSENGER_H_ */

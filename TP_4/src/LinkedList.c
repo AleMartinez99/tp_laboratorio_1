@@ -3,9 +3,6 @@
 #include "LinkedList.h"
 #include "Controller.h"
 
-static Node* getNode(LinkedList* this, int nodeIndex);  //
-static int addNode(LinkedList* this, int nodeIndex,void* pElement); //
-
 /** \brief Crea un nuevo LinkedList en memoria de manera dinamica
  *
  *  \param void
@@ -55,6 +52,7 @@ Node* getNode(LinkedList* this, int nodeIndex){
 
 		for(int i = 0;i<nodeIndex;i++){
 			pNode = pNode->pNextNode; /// ACA en pNode ya tnego guardado el nodo, y lo voy pasando de a uno a travez de las direcciones de memoria.
+			// pNode = pNode->pNextNode->pNextNode->pNextNode->pNextNode;
 		}
 	}
 	return pNode;
@@ -109,7 +107,7 @@ int addNode(LinkedList* this, int nodeIndex,void* pElement) {
 	return retorno;
 }
 
-/** \brief  Agrega un elemento a la lista
+/** \brief  Agrega un elemento al final de la lista
  * \param pList LinkedList* Puntero a la lista
  * \param pElement void* Puntero al elemento a ser agregado
  * \return int Retorna  (-1) Error: si el puntero a la lista es NULL
@@ -148,7 +146,7 @@ void* ll_get(LinkedList* this, int index) {
 	return returnAux;
 }
 
-/** \brief Modifica un elemento de la lista
+/** \brief MODIFICA un elemento de la lista
  *
  * \param this LinkedList* Puntero a la lista
  * \param nodeIndex int Ubicacion del elemento a modificar
@@ -232,6 +230,12 @@ int ll_clear(LinkedList* this) {
 
 			ll_remove(this,i);
 		}
+
+		/*
+		 while(!len) {
+		 	 ll_remove(this,0);
+		 }
+		 */
 		retorno = 0;
 	}
 	return retorno;
@@ -273,7 +277,7 @@ int ll_indexOf(LinkedList* this, void* pElement) {
 	if(this != NULL) {
 		for(int i = 0;i<len;i++) {
 
-			auxNode = test_getNode(this,i);
+			auxNode = getNode(this,i);
 
 			if(auxNode->pElement == pElement) {
 
@@ -321,7 +325,7 @@ int ll_push(LinkedList* this, int index, void* pElement){
 
 	if(this != NULL && index >= 0 && index <= ll_len(this)) {
 
-		retorno = test_addNode(this,index,pElement);
+		retorno = addNode(this,index,pElement);
 	}
 	return retorno;
 }
@@ -422,9 +426,11 @@ LinkedList* ll_subList(LinkedList* this,int from,int to) {
 		subList = ll_newLinkedList();
 
 		if(subList != NULL) {
+			// si queiro de 1 a 4 pongo from 1 y to 5
 			for(int i = from;i<to;i++) {
 
 				auxElement = ll_get(this,i);
+
 				ll_add(subList,auxElement);
 			}
 		}
@@ -486,6 +492,13 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order){
 					ll_set(this,i,auxElement2); /// le pasa el elemento que quiero que ponga en una posicion determinada
 					ll_set(this,i+1,auxElement);
 					estaOrdenado = 0;
+
+					/*
+					 aux = ll_get(this,i);
+					 ll_set(this,i,ll_get(this,i+1));
+					 ll_set(this,i+1,aux);
+
+					 */
 				}
 			}
 		}while(estaOrdenado == 0);
@@ -516,50 +529,60 @@ int ll_Informe(LinkedList* this, int (*pFunc)(void*)){
 }
 
 
-
-
 int ll_count(LinkedList* this, int (*pFunc)(void*)) {
-	int contador = -1;
+
+	int acumulador = -1;
 	int len;
+	int retornoFuncion;
 	void* auxElement = NULL;
-	int retorno;
 
 		if(this != NULL &&  pFunc != NULL) {
-			contador = 0;
+
+			acumulador = 0;
 			len = ll_len(this);
+
 			for(int i = 0;i<len;i++) {
+
 				auxElement = ll_get(this,i);
-				retorno = pFunc(auxElement);
-				contador += retorno;
+				retornoFuncion = pFunc(auxElement);
+
+				if(retornoFuncion != -1) {
+
+					acumulador += retornoFuncion;
+				}
 			}
 
 		}
-	return contador;
+	return acumulador;
 }
-
 
 
 LinkedList* ll_filter(LinkedList* this, int (*pFunc)(void* element)) {
 
-	LinkedList* subList = NULL;
+	LinkedList* filterList = NULL;
 	void* auxElement = NULL;
 	int len;
-	int indiceAux = 0;
 
 	if(this != NULL && pFunc != NULL) {
-			subList = ll_newLinkedList();
+
+		filterList = ll_newLinkedList();
+
+		if(filterList != NULL) {
+
 			len = ll_len(this);
-			if(subList != NULL) {
-				for(int i = 0;i<len;i++) {
-					auxElement = ll_get(this,i);
-					if(pFunc(auxElement)) {
-						 ll_push(subList, indiceAux, auxElement);
-						 indiceAux++;
-					}
+
+			for(int i = 0;i<len;i++) {
+
+				auxElement = ll_get(this,i);
+
+				if(pFunc(auxElement)) {
+
+					ll_add(filterList, auxElement);
 				}
 			}
 		}
-	return subList;
+	}
+	return filterList;
 }
 
 
@@ -574,9 +597,11 @@ LinkedList* ll_map(LinkedList* this, void (*pFunc)(void*)) {
 		len = ll_len(this);
 
 		for(int i = 0;i<len;i++) {
+
 			auxElement = ll_get(this,i);
+
 			if(auxElement != NULL) {
-				auxElement = controller_MapTercerInforme(auxElement);
+				pFunc(auxElement);
 			}
 		}
 	}

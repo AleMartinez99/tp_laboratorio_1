@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "Passenger.h"
+#include "miBiblioteca.h"
 
 /*
   	int id;
@@ -17,21 +18,11 @@
 ePassenger* Passenger_new() { // Retorna un puntero a passenger
 
 	ePassenger* nuevoPasajero = (ePassenger*) malloc(sizeof(ePassenger));
-    if(nuevoPasajero != NULL )
-    {
-    	nuevoPasajero->id = 0;
-        strcpy(nuevoPasajero->nombre,"");
-        strcpy(nuevoPasajero->apellido,"");
-        nuevoPasajero->precio = 0;
-        nuevoPasajero->millas = 0;
-        strcpy(nuevoPasajero->codigoVuelo,"");
-        strcpy(nuevoPasajero->tipoPasajero,"");
-        strcpy(nuevoPasajero->estadoVuelo,"");
-    }
+
     return nuevoPasajero;
 }
 
-ePassenger* Passenger_newParametros(char* idStr,char* nombreStr,char* apellidoStr,char* precioStr,char* codigoVueloStr,char* tipoPasajeroStr,char* estadoVueloStr) {
+ePassenger* Passenger_newParametros(char* idStr,char* nombreStr,char* apellidoStr,char* precioStr,char* codigoVueloStr,char* tipoPasajeroStr,char* estadoVueloStr,char* millas) {
 
 	ePassenger* pPassenger = Passenger_new();
 
@@ -43,6 +34,7 @@ ePassenger* Passenger_newParametros(char* idStr,char* nombreStr,char* apellidoSt
 		Passenger_setCodigoVuelo(pPassenger,codigoVueloStr);
 		Passenger_setTipoPasajero(pPassenger,tipoPasajeroStr);
 		Passenger_setEstadoVuelo(pPassenger,estadoVueloStr);
+		Passenger_setMilla(pPassenger,(atoi(millas)));
 	}
 
 	return pPassenger;
@@ -235,4 +227,107 @@ int Passenger_getEstadoVuelo(ePassenger* this,char* estadoVuelo){
 	return todoOk;
 }
 
+////////////////////////////////////////////////////////////////////////// PRACTICA
+
+float Passenger_PrecioPorCodivoVuelo(void* a) {
+
+	float price;
+	char pedirCodVuelo[10];
+	char codigo[10];
+	ePassenger* passenger = (ePassenger*)a;
+
+	if(a != NULL) {
+
+		miGetCadena("Ingrese codigo de vuelo",pedirCodVuelo);
+		Passenger_getCodigoVuelo(passenger,codigo);
+		if(!strcmp(pedirCodVuelo,codigo)) {
+			price = passenger->precio;
+		}
+	}
+	return price;
+}
+
 //////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+int Passenger_InformeEconomyClass(void* a) {
+
+	int todoOk = -1;
+	char tipoPasajero[50];
+
+	if(a != NULL) {
+		Passenger_getTipoPasajero(a,tipoPasajero);
+		if(!strcmp(tipoPasajero,"EconomyClass")) {
+			todoOk = 1;
+		}
+	}
+	return todoOk;
+}
+
+int Passenger_InformeExecutiveClass(void* a) {
+
+	int todoOk = -1;
+	char tipoPasajero[50];
+
+	if(a != NULL) {
+
+		Passenger_getTipoPasajero(a,tipoPasajero);
+		if(!strcmp(tipoPasajero,"ExecutiveClass")) {
+			todoOk = 1;
+		}
+	}
+	return todoOk;
+}
+// PASAR A PASSENGER
+int Passenger_InformeFirstClass(void* a) {
+
+	int todoOk = -1;
+	char tipoPasajero[50];
+
+	if(a != NULL) {
+		Passenger_getTipoPasajero(a,tipoPasajero);
+		if(!strcmp(tipoPasajero,"FirstClass")) {
+			todoOk = 1;
+		}
+	}
+	return todoOk;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+
+int Passenger_SegundoInforme(void* a) {
+
+	int todoOk = 0;
+	char tipoPasajero[50];
+
+	if(a != NULL) {
+		Passenger_getTipoPasajero(a,tipoPasajero);
+		if(!strcmp(tipoPasajero,"FirstClass")) {
+			todoOk = 1;
+		}
+	}
+	return todoOk;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+void Passenger_MapTercerInforme(void* a) {
+
+	int millas;
+	float aux;
+
+	if(a != NULL) {
+		Passenger_getPrecio(a,&aux);
+		aux = aux / (float)100;
+		millas = (int)aux;
+		if(Passenger_InformeFirstClass((ePassenger*)a)) {
+			millas = millas * 2;
+		} else if (Passenger_InformeExecutiveClass((ePassenger*)a)) {
+			millas = millas * 3;
+		}
+		Passenger_setMilla(a,millas);
+	//	printf("Las millas de %s son: %d\n",((ePassenger*)a)->nombre,((ePassenger*)a)->millas);
+	}
+}
+

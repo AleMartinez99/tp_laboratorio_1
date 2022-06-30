@@ -85,3 +85,5 @@ int utnGetCadenaSoloCaracteres(char cadena[],char mensaje[],char mensajeError1[]
 /// @param cadena
 /// @return
 int miPasarAMayusculas(char cadena[]);
+
+int miGetCadena(char mensaje[], char cadena[]);

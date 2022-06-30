@@ -77,7 +77,7 @@ int main() {
 				break;
 			case 10:
 				if(ll_len(listaPasajeros) > 0) {
-				controller_InformePassenger(listaPasajeros);
+					controller_InformePassenger(listaPasajeros);
             	} else {
             		printf("Primero ingrese un empleado\n");
             		system("pause");

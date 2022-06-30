@@ -14,17 +14,17 @@ int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger) {
 
 	ePassenger* pPassengerAux;
 	int cantLeida;
-	char buffer[7][128];
+	char buffer[8][128];
 	int todoOk = 0;
 
 	if(pFile != NULL && pArrayListPassenger != NULL) {
 		 do {
-			 cantLeida = fscanf(pFile,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",buffer[0],buffer[1],buffer[2],buffer[3],buffer[4],buffer[5],buffer[6]);
+			 cantLeida = fscanf(pFile,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",buffer[0],buffer[1],buffer[2],buffer[3],buffer[4],buffer[5],buffer[6],buffer[7]);
 
 			if(cantLeida < 7) {
 				break;
 			}
-			pPassengerAux = Passenger_newParametros(buffer[0],buffer[1],buffer[2],buffer[3],buffer[4],buffer[5],buffer[6]);
+			pPassengerAux = Passenger_newParametros(buffer[0],buffer[1],buffer[2],buffer[3],buffer[4],buffer[5],buffer[6],buffer[7]);
 
 			if(pPassengerAux != NULL) {
 				ll_add(pArrayListPassenger,pPassengerAux);
@@ -62,6 +62,7 @@ int parser_PassengerFromBinary(FILE* pFile , LinkedList* pArrayListPassenger) {
 	char auxCodigoVuelo[128];
 	char auxTipoPasajero[128];
 	char auxEstadoVuelo[128];
+	int auxMilla;
 
 	if(pFile != NULL && pArrayListPassenger != NULL) {
 		do {
@@ -75,8 +76,9 @@ int parser_PassengerFromBinary(FILE* pFile , LinkedList* pArrayListPassenger) {
 				Passenger_getPrecio(auxPassenger,&auxPrecio) &&
 				Passenger_getCodigoVuelo(auxPassenger,auxCodigoVuelo) &&
 				Passenger_getTipoPasajero(auxPassenger,auxTipoPasajero) &&
-				Passenger_getEstadoVuelo(auxPassenger,auxEstadoVuelo)) {
-
+				Passenger_getEstadoVuelo(auxPassenger,auxEstadoVuelo) &&
+				Passenger_getMilla(auxPassenger,&auxMilla))
+				{
 				ll_add(pArrayListPassenger,auxPassenger);
 				todoOk = 1;
 			}

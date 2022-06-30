@@ -142,6 +142,20 @@ int utnGetNumeroFlotanteSoloMinimo(float* pResultado,char* mensaje,char* mensaje
     return retorno;
 }
 
+int miGetCadena(char mensaje[], char cadena[]) {
+
+	int ok = 0;
+
+	if(mensaje !=NULL) {
+		printf("%s\n", mensaje);
+		fflush(stdin);
+		scanf("%s",cadena);
+		ok = 1;
+	}
+
+	return ok;
+}
+
 int utnGetCadenaSoloCaracteres(char cadena[],char mensaje[],char mensajeError1[], char mensajeError2[], int lenArray) {
 
 	int retorno = 0;
